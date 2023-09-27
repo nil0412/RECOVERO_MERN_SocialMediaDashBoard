@@ -9,6 +9,9 @@ I'm a full stack developer with 2+ yrs of using MERN Stack and Java & SpringBoot
 ## 🛠 Skills
 React, Nodejs, ExpressJs, MongoDB, Java, SpringBoot, Javascript, HTML, CSS...
 
+---
+
+
 # SocialMediaDashBoard_MERN
 A Social media dashboard using MERN Stack
 
