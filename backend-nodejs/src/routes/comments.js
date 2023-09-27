@@ -1,35 +1,20 @@
 // routes/comments.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const Comment = require('../models/Comment');
-
+const passport = require("passport");
+const Comment = require("../models/Comment");
+const commentController = require('../controllers/comments_controller');
 // Create a new comment
-router.post(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const newComment = new Comment({
-      user: req.user.id,
-      post: req.body.postId,
-      text: req.body.text,
-    });
+router.post("/", commentController.createComment);
 
-    newComment.save().then(comment => res.json(comment));
-  }
-);
+// Get comment by commentId
+router.get("/fetchCommentById", commentController.fetchCommentById);
+
+// Get comments by comments Ids Array
+router.get("/fetchCommentsByIdsArr", commentController.fetchCommentsByIdsArr);
 
 // Get all comments for a post
-router.get('/:postId', (req, res) => {
-  Comment.find({ post: req.params.postId })
-    .populate('user', ['username'])
-    .exec((err, comments) => {
-      if (err) {
-        return res.status(500).json({ error: 'Internal server error' });
-      }
-      res.json(comments);
-    });
-});
+router.get("/:postId", commentController.getCommentsByPostId);
 
 // Implement other CRUD operations for comments
 

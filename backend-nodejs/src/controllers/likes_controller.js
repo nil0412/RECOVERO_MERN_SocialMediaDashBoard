@@ -25,6 +25,8 @@ module.exports.toggleLike = async function (req, res, next) {
 				user: req.user._id,
 			});
 
+			let likeId = '';
+
 			// if a like already exists then delete it
 			if (existingLike) {
 				likeable.likes.pull(existingLike._id);
@@ -33,6 +35,7 @@ module.exports.toggleLike = async function (req, res, next) {
 				// existingLike.remove();
 				await Like.findByIdAndDelete(existingLike._id);
 				deleted = true;
+				likeId = existingLike._id;
 			} else {
 				// else make a new like
 
@@ -44,11 +47,13 @@ module.exports.toggleLike = async function (req, res, next) {
 
 				likeable.likes.push(newLike._id);
 				likeable.save();
+				likeId = newLike._id;
 			}
 
 			return res.json(200, {
 				message: "Request successful!",
 				data: {
+					id : likeId,
 					deleted: deleted,
 				},
 			});
