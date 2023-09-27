@@ -4,6 +4,7 @@ A Social media dashboard using __MERN__ Stack
 ## Screenshots
 
 ![App Screenshot](https://github.com/nil0412/SocialMediaDashBoard_MERN/blob/main/Screenshots/Screenshot%20(592).png)
+![Screenshot (614)](https://github.com/nil0412/SocialMediaDashBoard_MERN/assets/67678023/33b0c405-023d-4cdc-8ae0-ac9b41942c2b)
 
 
 ## Environment Variables Backend
