@@ -11,7 +11,7 @@ router.post("/", commentController.createComment);
 router.get("/fetchCommentById", commentController.fetchCommentById);
 
 // Get comments by comments Ids Array
-router.get("/fetchCommentsByIdsArr", commentController.fetchCommentsByIdsArr);
+router.post("/fetchCommentsByIdsArr", commentController.fetchCommentsByIdsArr);
 
 // Get all comments for a post
 router.get("/:postId", commentController.getCommentsByPostId);

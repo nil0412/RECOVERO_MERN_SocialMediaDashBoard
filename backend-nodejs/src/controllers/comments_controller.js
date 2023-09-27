@@ -48,11 +48,9 @@ module.exports = {
 	// Get comment by Id
 	fetchCommentById: async (req, res) => {
 		if (req.user) {
-			console.log("********User_id: ", req.user.name);
 			// User is authenticated; continue to the protected route
 			try {
 				const comment_id = req.query.comment_id;
-				console.log("********comment_id: ", comment_id);
 
 				// Check if the post exists
 				const comment = await Comment.findById(comment_id);
