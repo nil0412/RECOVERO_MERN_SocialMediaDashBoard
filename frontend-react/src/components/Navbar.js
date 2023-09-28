@@ -53,13 +53,13 @@ const Navbar = () => {
 	}, [searchText]);
 
 	return (
-		<div className={styles.nav}>
+		<div className={`${styles.nav} navbar`}>
 			<div className={styles.leftDiv}>
-				<Link to="/">
-					<h1 className={styles.logo}>
-						{"<"}SocialMedia{"/>"}
-					</h1>
-				</Link>
+				<h1 className={styles.logo}>
+					<Link to="/">
+						{"<"}ShareWibe{"/>"}
+					</Link>
+				</h1>
 			</div>
 
 			<div className={styles.searchContainer}>
@@ -99,25 +99,23 @@ const Navbar = () => {
 							<img
 								src="https://cdn-icons-png.flaticon.com/512/1144/1144709.png"
 								alt="user-icon"
-								className={styles.userDp}
-							/>
+								className={styles.userDp}></img>
+							<div>{auth.user.name}</div>
+							
 						</Link>
-						<span>{auth.user.name}</span>
 					</div>
 				)}
 
 				<div className={styles.navLinks}>
 					<ul>
 						{auth.user ? (
-							<>
-								<li onClick={auth.logout}>
-									<Link to="/login">Log out</Link>
-								</li>
-							</>
+							<li onClick={auth.logout}>
+								<Link to="/login">LogOut</Link>
+							</li>
 						) : (
 							<>
 								<li>
-									<Link to="/login">Log in</Link>
+									<Link to="/login">LogIn</Link>
 								</li>
 								<li>
 									<Link to="/register">Register</Link>
