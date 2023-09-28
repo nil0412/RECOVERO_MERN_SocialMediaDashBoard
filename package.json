@@ -3,7 +3,7 @@
     "concurrently": "^8.2.1"
   },
   "scripts": {
-    "install" : "npm install && concurrently \"cd react-frontend && npm install && npm start\" \"cd backend-nodejs && npm install && npm start\"",
+    "install" : "concurrently \"cd react-frontend && npm install && npm start\" \"cd backend-nodejs && npm install && npm start\"",
     "start": "concurrently \"cd react-frontend && npm start\" \"cd backend-nodejs && npm start\""
   }
   
