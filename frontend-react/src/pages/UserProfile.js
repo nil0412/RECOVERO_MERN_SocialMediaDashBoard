@@ -20,14 +20,16 @@ const UserProfile = () => {
 		const getUser = async () => {
 			const response = await fetchUserProfile(userId);
 			if (response.success) {
-				setUser(response.data.user);
-				setItsMe(auth.user._id === response.data.user._id);
+				const user = response.data.user;
+				setUser(user);
+				setItsMe(auth.user.id === user.id);
 				setIsFriend(() => {
-					const friends = auth.user.friendship;
+					const friends = auth.user.friends;
 					let friendIds = [];
 					if (friends.length !== 0) {
 						console.log("friends: ", friends);
-						friendIds = friends.map((friend) => friend.to_user);
+						friendIds = friends.map((friend) => friend.id);
+						console.log('friendIds: ', friendIds)
 						const index = friendIds.indexOf(userId);
 						if (index !== -1) {
 							return true;
@@ -44,32 +46,20 @@ const UserProfile = () => {
 		getUser();
 	}, [userId, navigate, toast]); //addToast
 
+	useEffect(()=>{
+		console.log("UserProfile useEffect - [requestInProgress] update")
+	}, [requestInProgress])
+
 	if (loading) {
 		return <Loader />;
 	}
-
-	// const checkIfUserIsAFriend = () => {
-	// 	const friends = auth.user.friendship;
-	// 	let friendIds = [];
-	// 	if (friends.length !== 0) {
-	//     console.log("friends: ", friends);
-	// 		friendIds = friends.map((friend) => friend.to_user);
-	// 		const index = friendIds.indexOf(userId);
-	// 		if (index !== -1) {
-	// 			return true;
-	// 		}
-	// 	}
-	// 	return false;
-	// };
 
 	const handleRemoveFriendClick = async () => {
 		setRequestInProgress(true);
 		const response = await removeFriend(userId);
 		if (response.success) {
-			const friendship = auth.user.friends.filter(
-				(friend) => friend.to_user._id === userId
-			);
-			auth.updateUserFriends(false, friendship[0]);
+			auth.removeUserFriend(userId);
+			setIsFriend(false);
 			toast.success("Friend Removed Successfully");
 		} else {
 			toast.error(response.message);
@@ -80,12 +70,14 @@ const UserProfile = () => {
 	const handleAddFriendClick = async () => {
 		setRequestInProgress(true);
 		const response = await addFriend(userId);
+		
+		console.log("newFriend: ", response)
 		if (response.success) {
-			const { newFriendship } = response.data;
-			auth.updateUserFriends(true, newFriendship);
-
+			const { newFriend } = response.data;
+			auth.addUserFriend(newFriend);
+			setIsFriend(true);
 			toast.success("Friend Added Successfully");
-		} else {
+		} else {	
 			toast.error(response.message);
 		}
 		setRequestInProgress(false);

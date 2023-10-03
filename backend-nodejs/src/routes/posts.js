@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const postController = require("../controllers/posts");
+const postController = require("../controllers/posts_controller");
 
 // Create a new post
 router.post("/create", postController.createPost);
@@ -14,6 +14,6 @@ router.get("/", postController.getAllPosts);
 // Add like and comment functionality
 
 // router.get('/', postController.index);
-router.delete('/:id', passport.authenticate('jwt', {session: false}), postController.destroy);
+router.delete("/:id", postController.destroy);
 
 module.exports = router;

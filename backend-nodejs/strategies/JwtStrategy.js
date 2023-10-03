@@ -11,18 +11,21 @@ opts.secretOrKey = process.env.JWT_SECRET;
 // i.e., to fetch user details from the JWT.
 passport.use(
 	new JwtStrategy(opts, function (jwt_payload, done) {
-		const userQuery = User.findOne({ _id: jwt_payload._id });
+		// const userQuery = User.findOne({ _id: jwt_payload._id });
+		const userQuery = User.findOne({ _id: jwt_payload.user.id });
 		userQuery
 			.exec()
 			.then((user) => {
 				if (user) {
 					return done(null, user);
 				} else {
-					return done(null, false);
+					console.log("I was here, JwtStrategy")
+					return done(null, false, { message: 'User not found' });
 				}
 			})
 			.catch((err) => {
-				return done(null, false);
+				console.log("I was here, JwtStrategy")
+				return done(err, false, { message: 'Internal Server Error' });
 			});
 	})
 );

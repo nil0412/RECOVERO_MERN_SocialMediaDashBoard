@@ -1,18 +1,21 @@
 import { FriendsList, Loader, Comment, CreatePost, Post } from "../components";
 import styles from "../styles/home.module.css";
 import { useAuth, usePosts } from "../hooks";
-import { useEffect } from "react";
-import { getPosts } from "../api";
+import { useEffect, useState } from "react";
 
 const Home = () => {
 	const auth = useAuth();
 	const posts = usePosts();
 
+	const fetchPosts = async () => {
+		const response = await posts.initialGetPosts();
+	};
+
 	useEffect(() => {
-		getPosts();
+		fetchPosts();
 	}, []);
 
-  if (posts.loading) {
+	if (posts.loading) {
 		return <Loader />;
 	}
 
@@ -20,10 +23,17 @@ const Home = () => {
 		<div className={styles.home}>
 			<div className={styles.postsList}>
 				<CreatePost />
-				{posts.data &&
-					posts.data.map((post) => (
-						<Post post={post} key={`post-${post._id}`}></Post>
-					))}
+				{!posts.loading ? (
+					posts.data.length > 0 ? (
+						posts.data.map((post) => (
+							<Post post={post} key={`post-${post._id}`}></Post>
+						))
+					) : (
+						<>No Posts found, Please post your thoughts</>
+					)
+				) : (
+					<Loader />
+				)}
 			</div>
 			{auth.user && <FriendsList />}
 		</div>

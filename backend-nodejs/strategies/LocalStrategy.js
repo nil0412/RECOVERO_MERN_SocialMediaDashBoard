@@ -23,13 +23,13 @@ passport.use(
 					return done(null, false, { message: "User not found" });
 				}
 				if (!bcrypt.compareSync(password, user.password)) {
-					return done(null, false, { message: "Incorrect password." });
+					return done(null, false, { message: "Incorrect password" });
 				}
 
 				// If everything is successful, return the user object
 				return done(null, user);
 			} catch (err) {
-				return done(err);
+				return done(err, false, { message: "Internal Server Error" });
 			}
 		}
 	)
@@ -41,8 +41,14 @@ passport.serializeUser((user, done) => {
 });
 
 // Deserialize user from the session
-passport.deserializeUser((id, done) => {
-	User.findById(id, (err, user) => {
-		done(err, user);
-	});
+passport.deserializeUser(async (id, done) => {
+	// User.findById(id, (err, user) => {
+	// 	done(err, user);
+	// });
+	try {
+		const user = await User.findById(id);
+		done(null, user);
+	  } catch (err) {
+		done(err, false);
+	  }
 });

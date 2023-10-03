@@ -27,6 +27,7 @@ const CreatePost = () => {
     <div className={styles.createPost}>
       <textarea
         className={styles.addPost}
+        placeholder='Share your thoughts...'
         value={post}
         onChange={(e) => setPost(e.target.value)}
       ></textarea>

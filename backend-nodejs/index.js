@@ -32,17 +32,19 @@ const whitelist = process.env.WHITELISTED_DOMAINS
   ? process.env.WHITELISTED_DOMAINS.split(",")
   : []
 
+// Configure CORS options
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+      callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"))
+      callback(new Error("Not allowed by CORS"));
     }
   },
-
-  credentials: true,
-}
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Define the HTTP methods you want to allow
+  allowedHeaders: 'Content-Type,Authorization', // Define the allowed request headers
+  credentials: true, // Allow credentials (cookies, etc.) to be included in the request
+};
 
 app.use(cors(corsOptions))
 

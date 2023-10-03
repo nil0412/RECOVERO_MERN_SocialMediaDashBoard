@@ -1,18 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { searchUsers } from "../api";
-import { useAuth } from "../hooks";
+import { useAuth, usePosts } from "../hooks";
 import styles from "../styles/navbar.module.css";
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { setUserFromToken } from "../redux/slices/authSlice";
 
 const Navbar = () => {
 	const [results, setResults] = useState([]);
 	const [searchText, setSearchText] = useState("");
 	const searchResultsRef = useRef(null);
 	const auth = useAuth();
+	const postsContext = usePosts();
 
-	useEffect(() => {
-		auth.currentUser();
-	}, []);
+	// const {user, loading} = useSelector((state) => state.auth);
+	// const dispatch = useDispatch();
 
 	useEffect(() => {
 		const handleClick = (e) => {
@@ -51,6 +54,11 @@ const Navbar = () => {
 
 		fetchUser();
 	}, [searchText]);
+
+	const handleLogout = () => {
+		auth.logout();
+		postsContext.clearPostsOnLogout();
+	};
 
 	return (
 		<div className={`${styles.nav} navbar`}>
@@ -94,6 +102,7 @@ const Navbar = () => {
 
 			<div className={styles.rightNav}>
 				{auth.user && (
+				// {user && (
 					<div className={styles.user}>
 						<Link to="/settings">
 							<img
@@ -101,7 +110,7 @@ const Navbar = () => {
 								alt="user-icon"
 								className={styles.userDp}></img>
 							<div>{auth.user.name}</div>
-							
+							{/* <div>{user.name}</div> */}
 						</Link>
 					</div>
 				)}
@@ -109,7 +118,8 @@ const Navbar = () => {
 				<div className={styles.navLinks}>
 					<ul>
 						{auth.user ? (
-							<li onClick={auth.logout}>
+						// {user ? (
+							<li onClick={handleLogout}>
 								<Link to="/login">LogOut</Link>
 							</li>
 						) : (

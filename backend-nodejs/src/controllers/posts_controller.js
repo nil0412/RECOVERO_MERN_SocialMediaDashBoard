@@ -18,7 +18,7 @@ module.exports = {
 				res.status(201).json(savedPost); // Use status 201 for resource creation
 			} catch (error) {
 				console.error("Error creating post:", error);
-				res.status(500).json({ error: "Server error" }); // Handle error gracefully
+				res.status(500).json({ message: "Server error" }); // Handle error gracefully
 			}
 			next();
 		} else {
@@ -112,7 +112,7 @@ module.exports = {
 				});
 			}
 		} catch (err) {
-			console.lof("**********", err);
+			console.log("**********from post destroy controller", err);
 			return res.json(500, {
 				message: "Internal Server Error",
 			});

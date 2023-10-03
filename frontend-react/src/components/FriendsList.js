@@ -7,32 +7,18 @@ import { fetchUserFriends } from "../api";
 
 const FriendsList = () => {
 	const auth = useAuth();
-	// let { friendship = [] } = auth.user;
-	const [friendship, setFriendship] = useState([]);
-
-	const fetchFriends = async () => {
-		const response = await fetchUserFriends();
-		if (response.success) {
-			setFriendship(response.data.friends);
-		} else {
-			toast.error(response.message);
-		}
-	};
-
-	useEffect(() => {
-		fetchFriends();
-	}, []);
+	let { friends = [] } = auth.user;
 
 	return (
 		<div className={styles.friendsList}>
 			<div className={styles.header}>Friends</div>
-			{friendship && friendship.length === 0 && (
+			{friends && friends.length === 0 && (
 				<div className={styles.noFriends}>No friends found!</div>
 			)}
-			{friendship &&
-				friendship.map((friend) => (
-					<div key={`friend-${friend._id}`}>
-						<Link className={styles.friendsItem} to={`/user/${friend._id}`}>
+			{friends &&
+				friends.map((friend) => (
+					<div key={`friend-${friend.id}`}>
+						<Link className={styles.friendsItem} to={`/user/${friend.id}`}>
 							<div className={styles.friendsImg}>
 								<img
 									src="https://cdn-icons-png.flaticon.com/512/1144/1144709.png"

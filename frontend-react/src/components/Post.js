@@ -55,7 +55,6 @@ const Post = ({ post }) => {
 							to={`/user/${post.user._id}`}
 							state={{ user: post.user }}
 							className={styles.postAuthor}>
-                {console.log("From Post: ", post)}
 							{post.email}
 						</Link>
 						<span className={styles.postTime}>a minute ago</span>

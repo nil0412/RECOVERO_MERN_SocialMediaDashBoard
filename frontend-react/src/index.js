@@ -1,22 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-// import { ToastProvider } from 'react-toast-notifications';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './styles/index.css';
-import { App } from './components';
-import { AuthProvider, PostsProvider } from './providers';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./styles/index.css";
+import { App } from "./components";
+import { AuthProvider, PostsProvider } from "./providers";
+import { Provider } from "react-redux";
+// import store from "./redux/store/store";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    {/* <ToastProvider autoDismiss autoDismissTimeout={5000} placement="top-right"> */}
-    <ToastContainer />
-      <AuthProvider>
-        <PostsProvider>
-          <App />
-        </PostsProvider>
-      </AuthProvider>
-    {/* </ToastProvider> */}
-  </React.StrictMode>
+	<React.StrictMode>
+		<ToastContainer />
+		{/* <Provider store={store}> */}
+		<AuthProvider>
+			<PostsProvider>
+				<App />
+			</PostsProvider>
+		</AuthProvider>
+		{/* </Provider> */}
+	</React.StrictMode>
 );
